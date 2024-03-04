@@ -1,112 +1,26 @@
 import gsap from "gsap";
 
 const letters = document.querySelectorAll(".letters");
-
-const tl = gsap.timeline({});
-const delay = .95;
-const duration = 1;
-const gap = 1;
-
-const replayTimeline = () => {
-    // add a delay
-    setTimeout(() => {
-        tl.restart();
-    }, gap * 1000);
-};
-tl
-    .to(letters[0], {
-        duration: duration,
-        y: "-100%",
-    }, `-=${delay}`)
-    .to(letters[1], {
-        duration: duration,
-        y: "-100%",
-    }, `-=${delay}`)
-    // .to(letters[2], {
-    //     duration: duration,
-    //     y: "-100%",
-    // }, `-=${delay}`)
-    .to(letters[3], {
-        duration: duration,
-        y: "-100%",
-    }, `-=${delay}`)
-    .to(letters[4], {
-        duration: duration,
-        y: "-100%",
-    }, `-=${delay}`)
-    // .to(letters[5], {
-    //     duration: duration,
-    //     y: "-100%",
-    // }, `-=${delay}`)
-    .to(letters[6], {
-        duration: duration,
-        y: "-100%",
-    }, `-=${delay}`)
-    .to(letters[7], {
-        duration: duration,
-        y: "-100%",
-    }, `-=${delay}`)
-    // .to(letters[8], {
-    //     duration: duration,
-    //     y: "-100%",
-    // }, `-=${delay}`)
-    .to(letters[9], {
-        duration: duration,
-        y: "-100%",
-    }, `-=${delay}`)
-    .to(letters[10], {
-        duration: duration,
-        y: "-100%",
-    }, `-=${delay}`)
-    // reverse the above
-    .to(letters[0], {
-        duration: duration,
-        y: "0%",
-    }, `+=${gap}`)
-    .to(letters[1], {
-        duration: duration,
-        y: "0%",
-    }, `-=${delay}`)
-    // .to(letters[2], {
-    //     duration: duration,
-    //     y: "0%",
-    // }, `-=${delay}`)
-    .to(letters[3], {
-        duration: duration,
-        y: "0%",
-    }, `-=${delay}`)
-    .to(letters[4], {
-        duration: duration,
-        y: "0%",
-    }, `-=${delay}`)
-    // .to(letters[5], {
-    //     duration: duration,
-    //     y: "0%",
-    // }, `-=${delay}`)
-    .to(letters[6], {
-        duration: duration,
-        y: "0%",
-    }, `-=${delay}`)
-    .to(letters[7], {
-        duration: duration,
-        y: "0%",
-    }, `-=${delay}`)
-    // .to(letters[8], {
-    //     duration: duration,
-    //     y: "0%",
-    // }, `-=${delay}`)
-    .to(letters[9], {
-        duration: duration,
-        y: "0%",
-    }, `-=${delay}`)
-    .to(letters[10], {
-        duration: duration,
-        y: "0%",
-    }, `-=${delay}`)
-    .eventCallback("onComplete", replayTimeline);
+let prevDay_0 = 0;
+let prevDay_1 = 0;
+let prevHr_0 = 0;
+let prevHr_1 = 0;
+let prevMin_0 = 0;
+let prevMin_1 = 0;
+let prevSec_0 = 0;
+let prevSec_1 = 0;
 
 // Set the launch date and time
-const launchDate = new Date("March 10, 2024 06:00:00").getTime();
+const launchDate = new Date("March 12, 2024 06:00:00").getTime();
+
+let stateDay_0 = 0;
+let stateDay_1 = 0;
+let stateHr_0 = 0;
+let stateHr_1 = 0;
+let stateMin_0 = 0;
+let stateMin_1 = 0;
+let stateSec_0 = 0;
+let stateSec_1 = 0;
 
 // Update the countdown every 1 second
 const countdown = setInterval(function () {
@@ -139,35 +53,234 @@ const countdown = setInterval(function () {
     const sec_0 = document.getElementsByClassName("sec_0");
     const sec_1 = document.getElementsByClassName("sec_1");
 
-    day_0[0].innerHTML = formattedCountdown[0];
-    day_1[0].innerHTML = formattedCountdown[1];
+    const currentDay_0 = formattedCountdown[0];
+    const currentDay_1 = formattedCountdown[1];
+    const currentHr_0 = formattedCountdown[3];
+    const currentHr_1 = formattedCountdown[4];
+    const currentMin_0 = formattedCountdown[6];
+    const currentMin_1 = formattedCountdown[7];
+    const currentSec_0 = formattedCountdown[9];
+    const currentSec_1 = formattedCountdown[10];
 
-    hr_0[0].innerHTML = formattedCountdown[3];
-    hr_1[0].innerHTML = formattedCountdown[4];
+    if (prevDay_0 !== currentDay_0) {
+        if (stateDay_0 === 0) {
+            day_0[1].innerHTML = currentDay_0;
+            gsap.fromTo(day_0[0], { y: "0%" }, { y: "100%", duration: 1 });
+            gsap.fromTo(day_0[1], {
+                y: "-100%",
+            }, {
+                y: "0%",
+                duration: 1,
+            });
+        } else {
+            day_0[0].innerHTML = currentDay_0;
+            gsap.fromTo(day_0[1], { y: "0%" }, { y: "100%", duration: 1 });
+            gsap.fromTo(day_0[0], {
+                y: "-100%",
+            }, {
+                y: "0%",
+                duration: 1,
+            });
+        }
 
-    min_0[0].innerHTML = formattedCountdown[6];
-    min_1[0].innerHTML = formattedCountdown[7];
+        stateDay_0 = stateDay_0 === 0 ? 1 : 0;
+    }
 
-    sec_0[0].innerHTML = formattedCountdown[9];
-    sec_1[0].innerHTML = formattedCountdown[10];
+    if (prevDay_1 !== currentDay_1) {
+        if (stateDay_1 === 0) {
+            day_1[1].innerHTML = currentDay_1;
+            gsap.fromTo(day_1[0], { y: "0%" }, { y: "100%", duration: 1 });
+            gsap.fromTo(day_1[1], {
+                y: "-100%",
+            }, {
+                y: "0%",
+                duration: 1,
+            });
+        } else {
+            day_1[0].innerHTML = currentDay_1;
+            gsap.fromTo(day_1[1], { y: "0%" }, { y: "100%", duration: 1 });
+            gsap.fromTo(day_1[0], {
+                y: "-100%",
+            }, {
+                y: "0%",
+                duration: 1,
+            });
+        }
 
-    day_0[1].innerHTML = formattedCountdown[0];
-    day_1[1].innerHTML = formattedCountdown[1];
+        stateDay_1 = stateDay_1 === 0 ? 1 : 0;
+    }
 
-    hr_0[1].innerHTML = formattedCountdown[3];
-    hr_1[1].innerHTML = formattedCountdown[4];
+    if (prevHr_0 !== currentHr_0) {
+        if (stateHr_0 === 0) {
+            hr_0[1].innerHTML = currentHr_0;
+            gsap.fromTo(hr_0[0], { y: "0%" }, { y: "100%", duration: 1 });
+            gsap.fromTo(hr_0[1], {
+                y: "-100%",
+            }, {
+                y: "0%",
+                duration: 1,
+            });
+        } else {
+            hr_0[0].innerHTML = currentHr_0;
+            gsap.fromTo(hr_0[1], { y: "0%" }, { y: "100%", duration: 1 });
+            gsap.fromTo(hr_0[0], {
+                y: "-100%",
+            }, {
+                y: "0%",
+                duration: 1,
+            });
+        }
 
-    min_0[1].innerHTML = formattedCountdown[6];
-    min_1[1].innerHTML = formattedCountdown[7];
+        stateHr_0 = stateHr_0 === 0 ? 1 : 0;
+    }
 
-    sec_0[1].innerHTML = formattedCountdown[9];
-    sec_1[1].innerHTML = formattedCountdown[10];
+    if (prevHr_1 !== currentHr_1) {
+        if (stateHr_1 === 0) {
+            hr_1[1].innerHTML = currentHr_1;
+            gsap.fromTo(hr_1[0], { y: "0%" }, { y: "100%", duration: 1 });
+            gsap.fromTo(hr_1[1], {
+                y: "-100%",
+            }, {
+                y: "0%",
+                duration: 1,
+            });
+        } else {
+            hr_1[0].innerHTML = currentHr_1;
+            gsap.fromTo(hr_1[1], { y: "0%" }, { y: "100%", duration: 1 });
+            gsap.fromTo(hr_1[0], {
+                y: "-100%",
+            }, {
+                y: "0%",
+                duration: 1,
+            });
+        }
 
-    // document.getElementById("countdown").innerHTML = formattedCountdown;
+        stateHr_1 = stateHr_1 === 0 ? 1 : 0;
+    }
 
-    // Check if the launch date and time have passed
-    // if (timeDifference < 0) {
-    //     clearInterval(countdown);
-    //     document.getElementById("countdown").innerHTML = "Launch has occurred!";
-    // }
+    if (prevMin_0 !== currentMin_0) {
+        if (stateMin_0 === 0) {
+            min_0[1].innerHTML = currentMin_0;
+            gsap.fromTo(min_0[0], { y: "0%" }, { y: "100%", duration: 1 });
+            gsap.fromTo(min_0[1], {
+                y: "-100%",
+            }, {
+                y: "0%",
+                duration: 1,
+            });
+        } else {
+            min_0[0].innerHTML = currentMin_0;
+            gsap.fromTo(min_0[1], { y: "0%" }, { y: "100%", duration: 1 });
+            gsap.fromTo(min_0[0], {
+                y: "-100%",
+            }, {
+                y: "0%",
+                duration: 1,
+            });
+        }
+
+        stateMin_0 = stateMin_0 === 0 ? 1 : 0;
+    }
+
+    if (prevMin_1 !== currentMin_1) {
+        if (stateMin_1 === 0) {
+            min_1[1].innerHTML = currentMin_1;
+            gsap.fromTo(min_1[0], { y: "0%" }, { y: "100%", duration: 1 });
+            gsap.fromTo(min_1[1], {
+                y: "-100%",
+            }, {
+                y: "0%",
+                duration: 1,
+            });
+        } else {
+            min_1[0].innerHTML = currentMin_1;
+            gsap.fromTo(min_1[1], { y: "0%" }, { y: "100%", duration: 1 });
+            gsap.fromTo(min_1[0], {
+                y: "-100%",
+            }, {
+                y: "0%",
+                duration: 1,
+            });
+        }
+
+        stateMin_1 = stateMin_1 === 0 ? 1 : 0;
+    }
+
+    if (prevSec_0 !== currentSec_0) {
+        if (stateSec_0 === 0) {
+
+            sec_0[1].innerHTML = currentSec_0;
+            gsap.fromTo(sec_0[0], { y: "0%" }, { y: "100%", duration: 1 });
+            gsap.fromTo(sec_0[1], {
+                y: "-100%",
+            }, {
+                y: "0%",
+                duration: 1,
+            });
+        } else {
+            sec_0[0].innerHTML = currentSec_0;
+            gsap.fromTo(sec_0[1], { y: "0%" }, { y: "100%", duration: 1 });
+            gsap.fromTo(sec_0[0], {
+                y: "-100%",
+            }, {
+                y: "0%",
+                duration: 1,
+            });
+        }
+
+        stateSec_0 = stateSec_0 === 0 ? 1 : 0;
+    }
+
+    if (prevSec_1 !== currentSec_1) {
+        if (stateSec_1 === 0) {
+            // update the html 
+            sec_1[1].innerHTML = currentSec_1;
+            gsap.fromTo(sec_1[0], { y: "0%" }, { y: "100%", duration: 1});
+            gsap.fromTo(sec_1[1], {
+                y: "-100%",
+            }, {
+                y: "0%",
+                duration: 1,
+            });
+        } else {
+            // update the html
+            sec_1[0].innerHTML = currentSec_1;
+            gsap.fromTo(sec_1[1], { y: "0%" }, { y: "100%", duration: 1 });
+            gsap.fromTo(sec_1[0], {
+                y: "-100%",
+            }, {
+                y: "0%",
+                duration: 1,
+            });
+        }
+
+        stateSec_1 = stateSec_1 === 0 ? 1 : 0;
+    }
+
+    prevDay_0 = currentDay_0;
+    prevDay_1 = currentDay_1;
+    prevHr_0 = currentHr_0;
+    prevHr_1 = currentHr_1;
+    prevMin_0 = currentMin_0;
+    prevMin_1 = currentMin_1;
+    prevSec_0 = currentSec_0;
+    prevSec_1 = currentSec_1;
+
+    // day_0[0].innerHTML = currentDay_0;
+    // day_1[0].innerHTML = currentDay_1;
+    // hr_0[0].innerHTML = currentHr_0;
+    // hr_1[0].innerHTML = currentHr_1;
+    // min_0[0].innerHTML = currentMin_0;
+    // min_1[0].innerHTML = currentMin_1;
+    // sec_0[0].innerHTML = currentSec_0;
+    // sec_1[0].innerHTML = currentSec_1;
+    //
+    // day_0[1].innerHTML = currentDay_0;
+    // day_1[1].innerHTML = currentDay_1;
+    // hr_0[1].innerHTML = currentHr_0;
+    // hr_1[1].innerHTML = currentHr_1;
+    // min_0[1].innerHTML = currentMin_0;
+    // min_1[1].innerHTML = currentMin_1;
+    // sec_0[1].innerHTML = currentSec_0;
+    // sec_1[1].innerHTML = currentSec_1;
 }, 1000);
